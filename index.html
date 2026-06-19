@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4: Improve — 4-Week Sprint</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&family=Lato:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:       #2E2A4F;
+            --bg-card:  #3A3560;
+            --bg-deep:  #231F3E;
+            --gold:     #E6C748;
+            --blue:     #0144AC;
+            --teal:     #81C7A5;
+            --white:    #FFFFFF;
+            --muted:    #C8C4E0;
+            --danger:   #E87070;
+            --red:      #C0392B;
+            --font-h:   'Montserrat', sans-serif;
+            --font-b:   'Lato', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--white);
+            font-family: var(--font-b);
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            background: linear-gradient(135deg, #231F3E 0%, #2E2A4F 50%, #1A1040 100%);
+            padding: 72px 24px 56px;
+            text-align: center;
+            border-bottom: 3px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 20%, rgba(230,199,72,0.07) 0%, transparent 55%),
+                        radial-gradient(ellipse at 80% 80%, rgba(129,199,165,0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-tag {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--bg-deep);
+            font-family: var(--font-h);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-family: var(--font-h);
+            font-size: clamp(2.4rem, 6vw, 4rem);
+            font-weight: 900;
+            line-height: 1.15;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+        .hero h1 span { color: var(--gold); }
+        .hero-sub {
+            font-family: var(--font-b);
+            font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+            color: var(--muted);
+            max-width: 680px;
+            margin: 0 auto 32px;
+            line-height: 1.8;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(230,199,72,0.12);
+            border: 1.5px solid var(--gold);
+            border-radius: 12px;
+            padding: 14px 28px;
+            font-family: var(--font-h);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        /* ── LAYOUT ── */
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        section { padding: 64px 32px; }
+        section:nth-child(even) { background: var(--bg-deep); }
+
+        .section-label {
+            font-family: var(--font-h);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-family: var(--font-h);
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        .section-intro {
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 100%;
+            margin-bottom: 48px;
+            line-height: 1.8;
+        }
+
+        /* ── PHILOSOPHY CARDS ── */
+        .phil-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-top: 8px;
+        }
+        .phil-card {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 28px 24px;
+            border-top: 3px solid var(--gold);
+        }
+        .phil-card.teal { border-top-color: var(--teal); }
+        .phil-card.blue { border-top-color: #4A90D9; }
+        .phil-icon { font-size: 1.8rem; margin-bottom: 12px; }
+        .phil-title {
+            font-family: var(--font-h);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+        .phil-card.teal .phil-title { color: var(--teal); }
+        .phil-card.blue .phil-title { color: #4A90D9; }
+        .phil-body {
+            font-size: 0.97rem;
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        /* ── INPUT REQUIRED ── */
+        .input-block {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 36px 40px;
+            border-left: 5px solid var(--teal);
+            margin-bottom: 0;
+        }
+        .input-title {
+            font-family: var(--font-h);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--teal);
+            margin-bottom: 8px;
+        }
+        .input-sub {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 24px;
+            line-height: 1.75;
+        }
+        .input-fields {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+        .input-field {
+            background: var(--bg-deep);
+            border-radius: 10px;
+            padding: 16px 18px;
+            border-top: 2px solid var(--teal);
+        }
+        .input-field-num {
+            font-family: var(--font-h);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--teal);
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .input-field-name {
+            font-family: var(--font-h);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .input-field-desc {
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* ── SURGERY STEPS — HORIZONTAL ── */
+        .steps-outer {
+            overflow-x: auto;
+            padding-bottom: 16px;
+        }
+        .steps-flow {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            min-width: 900px;
+        }
+        .step-wrap {
+            display: flex;
+            align-items: stretch;
+            flex: 1;
+        }
+        .step-card {
+            flex: 1;
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 28px 22px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* Step accent colors */
+        .step-card.s1 { border-top: 4px solid #E87070; }
+        .step-card.s2 { border-top: 4px solid #E6A047; }
+        .step-card.s3 { border-top: 4px solid var(--gold); }
+        .step-card.s4 { border-top: 4px solid var(--teal); }
+        .step-card.s5 { border-top: 4px solid #4A90D9; }
+
+        .step-num {
+            font-family: var(--font-h);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .s1 .step-num { color: #E87070; }
+        .s2 .step-num { color: #E6A047; }
+        .s3 .step-num { color: var(--gold); }
+        .s4 .step-num { color: var(--teal); }
+        .s5 .step-num { color: #4A90D9; }
+
+        .step-icon { font-size: 1.8rem; margin-bottom: 10px; }
+
+        .step-name {
+            font-family: var(--font-h);
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        .step-body {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.7;
+            flex: 1;
+        }
+        .step-body strong { color: var(--white); }
+
+        .step-tag {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-family: var(--font-h);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            align-self: flex-start;
+        }
+        .s1 .step-tag { background: rgba(232,112,112,0.15); color: #E87070; }
+        .s2 .step-tag { background: rgba(230,160,71,0.15); color: #E6A047; }
+        .s3 .step-tag { background: rgba(230,199,72,0.15); color: var(--gold); }
+        .s4 .step-tag { background: rgba(129,199,165,0.15); color: var(--teal); }
+        .s5 .step-tag { background: rgba(74,144,217,0.15); color: #4A90D9; }
+
+        /* Arrow connector */
+        .step-arrow {
+            flex-shrink: 0;
+            width: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: 900;
+            opacity: 0.6;
+        }
+
+        /* ── CONFIRM GATE ── */
+        .confirm-banner {
+            background: rgba(230,199,72,0.1);
+            border: 2px solid var(--gold);
+            border-radius: 14px;
+            padding: 24px 32px;
+            margin: 40px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .confirm-icon { font-size: 2rem; flex-shrink: 0; }
+        .confirm-title {
+            font-family: var(--font-h);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+        .confirm-body {
+            font-size: 0.97rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* ── CORE PRINCIPLE ── */
+        .principle-box {
+            background: linear-gradient(135deg, #1A1040, #231F3E);
+            border-radius: 20px;
+            padding: 48px 48px;
+            text-align: center;
+            border: 1.5px solid rgba(230,199,72,0.3);
+            position: relative;
+            overflow: hidden;
+            margin-top: 0;
+        }
+        .principle-brain {
+            position: absolute;
+            top: 12px;
+            right: 24px;
+            font-size: 5rem;
+            opacity: 1;
+            line-height: 1;
+            filter: drop-shadow(0 0 12px rgba(230,199,72,0.4));
+        }
+        .principle-quote {
+            font-family: var(--font-h);
+            font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.5;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+        .principle-quote span { color: var(--gold); }
+        .principle-attr {
+            font-size: 0.9rem;
+            color: var(--muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-family: var(--font-h);
+        }
+
+        /* ── WHAT YOU GET ── */
+        .output-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 8px;
+        }
+        .output-card {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 28px 24px;
+            text-align: center;
+        }
+        .output-icon { font-size: 2rem; margin-bottom: 12px; }
+        .output-title {
+            font-family: var(--font-h);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+        .output-desc {
+            font-size: 0.97rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--bg-deep);
+            border-top: 2px solid rgba(230,199,72,0.3);
+            padding: 28px 24px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+        footer strong { color: var(--gold); }
+
+        /* ── SCROLL TOP ── */
+        .scroll-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--gold);
+            color: var(--bg-deep);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-tag">4-Week Sprint Program</div>
+    <h1>Week 4: <span>Improve</span></h1>
+    <p class="hero-sub">Week 3 found what's broken.<br><br>Week 4 fixes it — with precision, not guesswork.</p>
+    <div class="hero-badge">🧠 Live Brain Surgery &nbsp;·&nbsp; Super User Drives &nbsp;·&nbsp; AI Operates Under Guidance</div>
+</div>
+
+<!-- SECTION 1 — PHILOSOPHY -->
+<section>
+    <div class="container">
+        <div class="section-label">The Methodology</div>
+        <h2 class="section-title">Digital Brain Surgery</h2>
+        <p class="section-intro">After Week 3 testing, the bot exists and has real feedback from real users. Live Brain Surgery addresses the most realistic scenario: the bot works, but specific behaviors are wrong. We don't rebuild. We operate. The Week 3 testing log is the patient chart. The prompt is the patient.</p>
+
+        <div class="phil-grid">
+            <div class="phil-card">
+                <div class="phil-icon">📋</div>
+                <div class="phil-title">No Data, No Surgery</div>
+                <div class="phil-body">Week 4 runs on Week 3 evidence. A surgeon doesn't operate without a patient chart. If the testing log is incomplete — vague, missing inputs and outputs, no Like/Dislike distinction — the session cannot proceed. Garbage in, garbage out.</div>
+            </div>
+            <div class="phil-card teal">
+                <div class="phil-icon">🎯</div>
+                <div class="phil-title">Targeted, Not Wholesale</div>
+                <div class="phil-body">We don't rebuild the bot from scratch. We identify the specific instruction producing the wrong behavior and operate on that section only. Precision over destruction. A good surgeon doesn't replace the whole organ when only one valve is failing.</div>
+            </div>
+            <div class="phil-card blue">
+                <div class="phil-icon">✋</div>
+                <div class="phil-title">Confirm Before You Cut</div>
+                <div class="phil-body">After diagnosis, the surgeon proposes the fix. Nothing is touched until the Super User confirms the plan. This is not optional. An unconfirmed surgery on a live system is how you create new problems while fixing old ones.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 2 — INPUT REQUIRED -->
+<section>
+    <div class="container">
+        <div class="section-label">Before Week 4 Begins</div>
+        <h2 class="section-title">What the Surgeon Needs</h2>
+        <p class="section-intro">The Week 3 testing log must be complete before Week 4 begins. These four fields are the minimum required to operate. Missing fields mean the surgeon is guessing — and surgeons don't guess.</p>
+
+        <div class="input-block">
+            <div class="input-title">Required: Structured Testing Data from Week 3</div>
+            <div class="input-sub">Every row in the testing log must have all four fields populated. Incomplete rows are not usable. One row per test scenario — no combining multiple issues into a single entry.</div>
+            <div class="input-fields">
+                <div class="input-field">
+                    <div class="input-field-num">FIELD 1</div>
+                    <div class="input-field-name">Like / Dislike</div>
+                    <div class="input-field-desc">The gut reaction. Good or bad. This is the tester's verdict before any analysis.</div>
+                </div>
+                <div class="input-field">
+                    <div class="input-field-num">FIELD 2</div>
+                    <div class="input-field-name">Input &amp; Output</div>
+                    <div class="input-field-desc">Exact text — what was typed, what came back. Word for word. This is the evidence.</div>
+                </div>
+                <div class="input-field">
+                    <div class="input-field-num">FIELD 3</div>
+                    <div class="input-field-name">Why</div>
+                    <div class="input-field-desc">One sentence. What made it good or bad. A reason without evidence is a guess.</div>
+                </div>
+                <div class="input-field">
+                    <div class="input-field-num">FIELD 4</div>
+                    <div class="input-field-name">How It Should Behave</div>
+                    <div class="input-field-desc">If the tester knows the correct output — describe it. Like ordering a steak: be specific. The surgeon needs the order, not just the complaint.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 3 — THE 5 STEPS -->
+<section>
+    <div class="container">
+        <div class="section-label">The Operating Sequence</div>
+        <h2 class="section-title">Live Brain Surgery — 5 Steps</h2>
+        <p class="section-intro">Every session follows this sequence. No shortcuts, no reordering. The Super User drives. The AI operates under guidance.</p>
+
+        <div class="steps-outer">
+            <div class="steps-flow">
+
+                <div class="step-wrap">
+                    <div class="step-card s1">
+                        <div class="step-num">Step 01</div>
+                        <div class="step-icon">🩺</div>
+                        <div class="step-name">Symptoms</div>
+                        <div class="step-body">Upload the Week 3 testing log. The AI reads all tester entries — every Like/Dislike, every input/output pair, every "why." <strong>Patterns across multiple testers surface first.</strong> One tester's complaint is noise. Three testers flagging the same behavior is a symptom.</div>
+                        <span class="step-tag">Read the patient chart</span>
+                    </div>
+                </div>
+
+                <div class="step-arrow">›</div>
+
+                <div class="step-wrap">
+                    <div class="step-card s2">
+                        <div class="step-num">Step 02</div>
+                        <div class="step-icon">🔬</div>
+                        <div class="step-name">Diagnose</div>
+                        <div class="step-body">Identify the root cause inside the prompt. <strong>Which specific instruction is producing the wrong behavior?</strong> The AI proposes 2–3 fix options unless the tester already described how they want it done. Surface the tradeoffs — not just the recommendation.</div>
+                        <span class="step-tag">Find the cause, not the symptom</span>
+                    </div>
+                </div>
+
+                <div class="step-arrow">›</div>
+
+                <div class="step-wrap">
+                    <div class="step-card s3">
+                        <div class="step-num">Step 03</div>
+                        <div class="step-icon">🔪</div>
+                        <div class="step-name">Brain Surgery</div>
+                        <div class="step-body"><strong>Nothing is touched until the Super User confirms the plan.</strong> Once confirmed — execute. Revise only the affected section of the prompt. Not the whole prompt. Show the revised section in isolation so the change is visible and reviewable before integration.</div>
+                        <span class="step-tag">Confirm first. Cut second.</span>
+                    </div>
+                </div>
+
+                <div class="step-arrow">›</div>
+
+                <div class="step-wrap">
+                    <div class="step-card s4">
+                        <div class="step-num">Step 04</div>
+                        <div class="step-icon">🔗</div>
+                        <div class="step-name">Transplant</div>
+                        <div class="step-body">Integrate the revised section into the complete prompt. Replace the old instruction. Save. <strong>The complete revised prompt is shown in full</strong> so the Super User can confirm the fix is in the right place and nothing adjacent was disrupted.</div>
+                        <span class="step-tag">Replace. Save. Confirm.</span>
+                    </div>
+                </div>
+
+                <div class="step-arrow">›</div>
+
+                <div class="step-wrap">
+                    <div class="step-card s5">
+                        <div class="step-num">Step 05</div>
+                        <div class="step-icon">📡</div>
+                        <div class="step-name">Post-Op Monitoring</div>
+                        <div class="step-body">Test the exact scenarios that triggered the original failures. <strong>Do not assume it worked — verify.</strong> Use the tester's original inputs from the Week 3 log. If the behavior changed correctly, the surgery is complete. If not, return to Diagnose.</div>
+                        <span class="step-tag">Verify. Don't assume.</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="confirm-banner">
+            <div class="confirm-icon">⚠️</div>
+            <div>
+                <div class="confirm-title">The Confirmation Gate — Between Diagnose and Surgery</div>
+                <div class="confirm-body">After Step 2, the AI proposes a fix. The Super User must explicitly confirm before Step 3 begins. This is the only moment where the session pauses and waits. An unconfirmed surgery on a live system creates new problems while fixing old ones.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 4 — CORE PRINCIPLE -->
+<section>
+    <div class="container">
+        <div class="principle-box">
+            <div class="principle-brain">🧠</div>
+            <div class="principle-quote">"You are not fixing the bot.<br>The bot is <span>fixing itself</span> — with your guidance.<br>Your job is to ask the right question<br>and validate the output."</div>
+            <div class="principle-attr">— The Live Brain Surgery Principle</div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 5 — WHAT YOU GET -->
+<section>
+    <div class="container">
+        <div class="section-label">Session Output</div>
+        <h2 class="section-title">What You Leave With</h2>
+        <p class="section-intro">By the end of Week 4, the bot has been operated on using real evidence from real users. Not guesswork — surgery.</p>
+
+        <div class="output-grid">
+            <div class="output-card">
+                <div class="output-icon">🤖</div>
+                <div class="output-title">A Refined Assistant</div>
+                <div class="output-desc">Specific behavioral failures fixed. Verified against the original failing scenarios. Ready for real-world deployment.</div>
+            </div>
+            <div class="output-card">
+                <div class="output-icon">📝</div>
+                <div class="output-title">A Surgical Record</div>
+                <div class="output-desc">What was wrong, what was changed, and why. Every revision traceable back to tester evidence. No mystery fixes.</div>
+            </div>
+            <div class="output-card">
+                <div class="output-icon">🚀</div>
+                <div class="output-title">A Clear Next Step</div>
+                <div class="output-desc">Either the bot is production-ready and Week 8 is scheduled — or another round of testing is scoped with specific targets.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <strong>Week 4: Improve</strong> &nbsp;·&nbsp; 4-Week Sprint Program &nbsp;·&nbsp; Brenda Li &nbsp;·&nbsp; 2026
+</footer>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+    const btn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+        btn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+</script>
+
+</body>
+</html>
